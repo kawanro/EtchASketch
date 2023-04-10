@@ -1,16 +1,17 @@
 const container = document.getElementById("gridContainer");
+let alpha = 0.1;
 
-function addOpaque(){
+function addOpaque(square){
     let red = randomColor();
     let green = randomColor();
     let blue = randomColor();
-    let alpha = 0.1;
+    //let alpha = 0.1;
 
-    if(this.style.background == ""){
-        this.style.background = "rgba(" + green + "," +red+","+blue+","+alpha;
+    if(square.style.background == ""){
+        square.style.background = "rgba(" + green + "," +red+","+blue+","+alpha;
     } 
     else{
-        let currentColor= this.style.background;
+        let currentColor= square.style.background;
         currentColor = currentColor.split(",");
         let currentRed= currentColor[0].slice(5,currentColor[0].length);
         let currentGreen= currentColor[1];
@@ -24,25 +25,32 @@ function addOpaque(){
 
         }
 
-        this.style.background = "rgba(" + currentRed + "," +currentGreen+","+currentBlue+","+newAlpha;
+        square.style.background = "rgba(" + currentRed + "," +currentGreen+","+currentBlue+","+newAlpha;
 
         console.log(newAlpha);
     }
 }
 
-function addColor(){
+function addColor(square){
     let red = randomColor();
     let green = randomColor();
     let blue = randomColor();
 
-    this.style.background = "rgb(" + green + "," +red+","+blue;
+    square.style.background = "rgba(" + green + "," +red+","+blue+","+alpha;
+    console.log(square.style.background);
 }
 
+function hexTorgb(hex) {
+    return ['0x' + hex[1] + hex[2] | 0, '0x' + hex[3] + hex[4] | 0, '0x' + hex[5] + hex[6] | 0];
+  }
 
-function chooseColor(){
+
+function chooseColor(square){
     const chosenColor= document.getElementById("colorpick");
+    let chosenColorRGB= hexTorgb(chosenColor);
+    console.log(square.style.background);
     
-    this.style.background= chosenColor.value;
+    square.style.background= "rgba(" +chosenColorRGB[0]  + "," +chosenColorRGB[1]+","+chosenColorRGB[2]+","+alpha;
 }
 
 function randomColor(){
@@ -52,7 +60,7 @@ function randomColor(){
 
 
 function createSquares(num){
-    const height = Math.floor(500/num);
+    const height = 500/num-2;
 
     for (i=0;i<num;i++)
     {
@@ -101,15 +109,15 @@ button.addEventListener("click", () => {
 
 function checkMode(){
     if(document.getElementById("choose").checked){
-        chooseColor();
-        console.log("choose");
+        chooseColor(this);
+        //console.log(this);
     }
     else if (document.getElementById("random").checked){
-        //addColor();
+        addColor(this);
         console.log("random");
     }
     else if (document.getElementById("opaque").checked){
-        //addOpaque();
+        addOpaque(this);
         console.log("opaque");
     }
 }
