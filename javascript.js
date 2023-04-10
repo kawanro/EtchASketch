@@ -4,11 +4,29 @@ function addColor(){
     let red = randomColor();
     let green = randomColor();
     let blue = randomColor();
-    //this.classList.add("blue");
-    //this.style.background = "rgb(" + green + "," +red+","+blue
-    //this.style.background = "hsl(" + green + ",100%,50%"
+    let alpha = 0.1;
+
     if(this.style.background == ""){
-        this.style.background = "hsl(" + green + ",100%,50%"
+        this.style.background = "rgba(" + green + "," +red+","+blue+","+alpha;
+    } 
+    else{
+        let currentColor= this.style.background;
+        currentColor = currentColor.split(",");
+        let currentRed= currentColor[0].slice(5,currentColor[0].length);
+        let currentGreen= currentColor[1];
+        let currentBlue = currentColor[2];
+        currentColor[3] = currentColor[3].slice(0,-1);
+        let newAlpha = parseFloat(currentColor[3])+0.1;
+
+        if(newAlpha>0.9){
+            console.log("fin");
+            return
+
+        }
+
+        this.style.background = "rgba(" + currentRed + "," +currentGreen+","+currentBlue+","+newAlpha;
+
+        console.log(newAlpha);
     }
 
     
