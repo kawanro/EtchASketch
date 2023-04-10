@@ -1,6 +1,6 @@
 const container = document.getElementById("gridContainer");
 
-function addColor(){
+function addOpaque(){
     let red = randomColor();
     let green = randomColor();
     let blue = randomColor();
@@ -28,8 +28,21 @@ function addColor(){
 
         console.log(newAlpha);
     }
+}
 
+function addColor(){
+    let red = randomColor();
+    let green = randomColor();
+    let blue = randomColor();
+
+    this.style.background = "rgb(" + green + "," +red+","+blue;
+}
+
+
+function chooseColor(){
+    const chosenColor= document.getElementById("colorpick");
     
+    this.style.background= chosenColor.value;
 }
 
 function randomColor(){
@@ -39,7 +52,7 @@ function randomColor(){
 
 
 function createSquares(num){
-    const height = 100/num;
+    const height = Math.floor(500/num);
 
     for (i=0;i<num;i++)
     {
@@ -62,7 +75,7 @@ function createSquares(num){
 
     const allSquares = document.querySelectorAll(".grid");
 
-    allSquares.forEach(square => square.addEventListener('mouseout', addColor));
+    allSquares.forEach(square => square.addEventListener('mouseout', checkMode));
     
     
 
@@ -72,7 +85,9 @@ const button = document.getElementById("button");
 button.addEventListener("click", () => {
     let userInput = prompt("Please enter the size of your grid ");
     userInput = parseInt(userInput);
-    if (userInput="NaN" || userInput<1){
+    console.log(userInput)
+    while (isNaN(userInput) || userInput<1){
+        console.log(userInput)
         alert("Please enter a number over 0");
         userInput = prompt("Please enter the size of your grid ");
     }
@@ -82,5 +97,21 @@ button.addEventListener("click", () => {
       }
     createSquares(userInput);
 });
+
+
+function checkMode(){
+    if(document.getElementById("choose").checked){
+        chooseColor();
+        console.log("choose");
+    }
+    else if (document.getElementById("random").checked){
+        //addColor();
+        console.log("random");
+    }
+    else if (document.getElementById("opaque").checked){
+        //addOpaque();
+        console.log("opaque");
+    }
+}
 
 createSquares(16);
